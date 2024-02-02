@@ -1,0 +1,66 @@
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: nginx-http-scaler
+  namespace: default
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    app: nginx-deployment
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+    - type: Pods
+      pods:
+        metricName: http_requests_per_second
+        targetAverageValue: 10m
+
+
+
+# apiVersion: autoscaling/v2beta2
+# kind: HorizontalPodAutoscaler
+# spec:
+#   scaleTargetRef:
+#     apiVersion: apps/v1
+#     kind: Deployment
+#     name: model-serving-deployment
+#   minReplicas: 1
+#   maxReplicas: 50
+#   metrics:
+#     - type: Object
+#       object:
+#         metric:
+#           name: nginx_ingress_requests_per_second
+#         describedObject:
+#           kind: Service
+#           name: model-serving-deployment
+#           apiVersion: v1
+#         target:
+#           type: AverageValue
+#           averageValue: 20000m
+
+
+
+
+
+
+# kind: HorizontalPodAutoscaler
+# apiVersion: autoscaling/v2beta1
+# metadata:
+#   name: sample-metrics-app-hpa
+# spec:
+#   scaleTargetRef:
+#     apiVersion: apps/v1
+#     kind: Deployment
+#     name: sample-metrics-app
+#   minReplicas: 2
+#   maxReplicas: 10
+#   metrics:
+#   - type: Object
+#     object:
+#       target:
+#         kind: Service
+#         name: sample-metrics-app
+#       metricName: http_requests
+#       targetValue: 100

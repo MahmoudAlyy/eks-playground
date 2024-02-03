@@ -5,14 +5,14 @@ aws eks update-kubeconfig --region us-east-2 --name eks-playground-LesRzzhf
 
 kubectl apply -f kubernetes/sampleWebService.yaml
 
-kubectl autoscale deployment nginx-deployment --name=nginx-deployment-austoscaler --cpu-percent=50 --min=1 --max=5
+kubectl autoscale deployment podinfo-deployment --name=podinfo-deployment-austoscaler --cpu-percent=50 --min=1 --max=5
 
 
 Test autoscaling by genrating load
 
 kubectl run load-generator \
   --image=williamyeh/hey:latest \
-  --restart=Never -- -c 200 -q 100 -z 10m  http://nginx-service.default.svc.cluster.local
+  --restart=Never -- -c 200 -q 100 -z 10m  http://podinfo-service.default.svc.cluster.local
 
 kubectl delete pod load-generator
 
@@ -21,8 +21,8 @@ kubectl delete pod load-generator
 
 ---
 i faced a problem when i tried to make node node communcatiin (trying to run curl from one node to another for hpa testing)
-curl could not reach  http://nginx-service.default.svc.cluster.local
-after debugging turns out the security group was the problem as it only allows ports (1025 - 65535) and nginx on node was hosted on port 80
+curl could not reach  http://podinfo-service.default.svc.cluster.local
+after debugging turns out the security group was the problem as it only allows ports (1025 - 65535) and podinfo on node was hosted on port 80
 to fix another rule to the sg to allow node to node ingress on port 80
 
 

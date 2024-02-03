@@ -63,5 +63,7 @@ helm install prometheus prometheus-community/prometheus --set alertmanager.enabl
   kubectl --namespace default port-forward $POD_NAME 9090
 
 
+delete the other scaler
+
 In a few minutes you should be able to list metrics using the following command(s):
 kubectl get --raw /apis/custom.metrics.k8s.io/v1beta1

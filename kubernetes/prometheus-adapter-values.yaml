@@ -2,30 +2,13 @@ prometheus:
   url: http://prometheus-server.default.svc
   port: 80
 
-
-# rules:
-#   default: true
-#   custom:
-#     - seriesQuery: 'http_requests_total{app="podinfo"}'
-#       resources:
-#         overrides:
-#           namespace: {resource: "namespace"}
-#           pod: {resource: "pod"}
-#       name:
-#         matches: "http_requests_total"
-#         as: "http_requests_per_second"
-#       metricsQuery: 'sum(rate(<<.Series>>{<<.LabelMatchers>>}[1m])) by (<<.GroupBy>>)'
-
-# try matching the query with the resource
-# try removing label matcher
-
 rules:
   default: false
   custom:
-    - seriesQuery: 'http_requests_total{namespace!=""}'
-      resources:
-        template: <<.Resource>>
-      name:
-        matches: "http_requests_total"
-        as: "http_requests_per_second"
-      metricsQuery: sum(<<.Series>>{<<.LabelMatchers>>}) by (<<.GroupBy>>)
+  - seriesQuery: 'http_requests_total{service="podinfo-service"}'
+    resources:
+      template: <<.Resource>>
+    name:
+      matches: "http_requests_total"
+      as: "http_requests_per_second"
+    metricsQuery: "sum(rate(<<.Series>>{<<.LabelMatchers>>}[2m])) by (<<.GroupBy>>)"

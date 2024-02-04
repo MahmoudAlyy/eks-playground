@@ -8,15 +8,8 @@ spec:
     kind: Deployment
     name: podinfo-deployment
   minReplicas: 1
-  maxReplicas: 5
+  maxReplicas: 3
   metrics:
-  # - type: Pods
-  #   pods:
-  #     metric:
-  #       name: http_requests_per_second
-  #     target:
-  #       type: AverageValue
-  #       averageValue: 10m
   - type: Object
     object:
       metric:
@@ -27,4 +20,4 @@ spec:
         name: podinfo-service
       target:
         type: Value
-        value: 5
+        value: 10

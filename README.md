@@ -66,4 +66,11 @@ helm install prometheus prometheus-community/prometheus --set alertmanager.enabl
 delete the other scaler
 
 In a few minutes you should be able to list metrics using the following command(s):
-kubectl get --raw /apis/custom.metrics.k8s.io/v1beta1
+kubectl get --raw /apis/custom.metrics.k8s.io/v1beta1/namespaces/default
+
+
+kubectl get --raw /apis/external.metrics.k8s.io/v1beta1/namespaces/default |jq
+
+* Issue faced:
+sum(rate(http_requests_total{namespace!=""}[1m])) by (namespace)
+prometheus is scraping data every 1m so in turn, this query returns nothing.

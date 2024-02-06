@@ -120,3 +120,4 @@ kubectl port-forward service/grafana 4000:80
 ```
 
 You should find a dashboard that monitors node CPU & memory usage.
+<img width="1213" alt="image" src="https://github.com/MahmoudAlyy/eks-playground/assets/57804225/89e28af0-9eb1-457c-9f26-06b170583b30">
